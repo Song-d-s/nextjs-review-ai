@@ -16,7 +16,7 @@ const SurveyInputRating: React.FC<SurveyInputRatingProps> = ({
           <span className="label-text">점수: {value}</span>
           <div className="input-bordered input"></div>
         </label>
-        <div className="absolute bottom-2 left-0 right-0 px-3">
+        <div className="absolute bottom-2.5 left-0 right-0 px-3">
           <input
             name="rating"
             type="range"

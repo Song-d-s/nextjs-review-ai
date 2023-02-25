@@ -5,6 +5,7 @@ import { BiReset } from "react-icons/bi";
 import SurveyInputPacket from "./SurveyInputPacket";
 import SurveyInputKeyword from "./Keyword/SurveyInputKeyword";
 import SurveyInputType from "./SurveyInputType";
+import Spinner from "../Spinner";
 
 type SurveyFormProps = {};
 
@@ -28,6 +29,7 @@ const defaultFormState: SurveyFormState = {
 
 const SurveyForm: React.FC<SurveyFormProps> = () => {
   const [formState, setFormState] = useState(defaultFormState);
+  const [isLoading, setIsLoading] = useState(false);
   const { postQuery } = useQuery();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +42,8 @@ const SurveyForm: React.FC<SurveyFormProps> = () => {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isLoading) return;
+    setIsLoading(true);
     console.log("formState Check:", formState);
     try {
       const { result } = await postQuery(formState);
@@ -47,11 +51,12 @@ const SurveyForm: React.FC<SurveyFormProps> = () => {
     } catch (error) {
       console.error("Review generation error", error);
     }
+    setIsLoading(false);
   };
 
   return (
     <>
-      <form onSubmit={onSubmit} className="flex flex-col gap-3 p-2">
+      <form onSubmit={onSubmit} className="flex flex-col gap-3">
         <label className="input-group input-group-vertical w-full">
           <span className="label-text">메뉴*</span>
           <input
@@ -93,12 +98,12 @@ const SurveyForm: React.FC<SurveyFormProps> = () => {
           <button
             className="btn-success btn col-span-3 text-lg text-primary-content"
             type="submit"
+            disabled={isLoading}
           >
-            생성
+            {isLoading ? <Spinner /> : "생성"}
           </button>
         </div>
       </form>
-      <div>{}</div>
     </>
   );
 };

@@ -1,7 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 
 // Initialize the OpenAI API with your API key
-console.log("check key status:", process.env.OPENAI_API_KEY);
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -25,17 +24,18 @@ const generateText = async (prompt: string, packet: number) => {
     // Return the generated text
     const { text } = response.data.choices[0];
     if (!text) {
-      throw new Error("NO result on openai");
+      throw new Error("No result from OpenAI");
     }
     return text.trim();
   } catch (error: any) {
-    console.log("generateText Error");
-    if (error.response) {
-      console.log("-", error.response.status);
-      console.log("-", error.response.data);
-    } else {
-      console.log("-", error.message);
-    }
+    console.error("Error in generateText:", error.message);
+    console.error(
+      "Error details:",
+      error.response?.status,
+      error.response?.data
+    );
+
+    throw error;
   }
 };
 

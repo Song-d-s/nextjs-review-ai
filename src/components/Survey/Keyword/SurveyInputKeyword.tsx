@@ -43,7 +43,7 @@ const SurveyInputKeyword: React.FC<SurveyInputKeywordProps> = ({
           <span className="label-text">키워드</span>
           <div className="input-bordered input"></div>
         </label>
-        <div className="absolute right-0 left-0 bottom-2.5 flex overflow-x-auto px-2 scrollbar-hide">
+        <div className="absolute right-0 left-0 bottom-3 flex overflow-x-auto px-2 scrollbar-hide">
           {keywords.map((keyword) => (
             <KeywordItem
               key={keyword}

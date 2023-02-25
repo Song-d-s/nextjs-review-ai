@@ -20,9 +20,15 @@ const useQuery = () => {
         body: JSON.stringify({ ...requestBody }),
       });
 
+      if (!response.ok) {
+        throw new Error(
+          `postQuery error: ${response.status} ${response.statusText}`
+        );
+      }
+
       return await response.json();
     } catch (error: any) {
-      console.error(`postQuery error: ${error}`);
+      console.error(error);
       throw error;
     }
   };

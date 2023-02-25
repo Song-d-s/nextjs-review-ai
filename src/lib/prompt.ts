@@ -13,7 +13,8 @@ const makePrompt = (data: FormState) => {
     ${keyword && `- Keywords (e.g., savory, sweet, spicy, etc.): ${keyword}`}
     ${company && `- Name of the restaurant or company: ${company}`}
     Ensure that your review is filled with grandiose language and self-aggrandizing statements, as befits a fashion magazine editor.
-    Please finish your sentence within the packet limit.
+    But don't reveal that you are a magazine editor.
+    Most importantly, finish your sentence within the packet limit.
     - Review Packet Limit: ${packet} packets
     `;
   console.log("Prompt Generated:", prompt);

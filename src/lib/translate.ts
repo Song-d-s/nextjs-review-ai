@@ -1,8 +1,5 @@
 import { TranslationServiceClient } from "@google-cloud/translate";
 
-/* - redundants
-type: process.env.GOOGLE_TYPE,
-client_id: process.env.GOOGLE_CLIENT_ID, */
 const translationClient = new TranslationServiceClient({
   credentials: {
     private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
@@ -38,13 +35,6 @@ const translate = async (text: string, source: Language, target: Language) => {
 
     return result;
   } catch (error) {
-    // console.log("** check Credentials", {
-    //   type: process.env.GOOGLE_TYPE,
-    //   client_id: process.env.GOOGLE_CLIENT_ID,
-    //   client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    //   private_key: process.env.GOOGLE_PRIVATE_KEY,
-    // });
-    // console.log(translationClient);
     console.error("** Error translating text:", error);
     throw new Error("Failed to translate text");
   }
