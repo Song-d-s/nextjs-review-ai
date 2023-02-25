@@ -8,11 +8,13 @@ const translationClient = new TranslationServiceClient({
     private_key: process.env.GOOGLE_PRIVATE_KEY,
   },
 });
-
 // Define the text to be translated and the target language
 type Language = "kr" | "en";
 
 const translate = async (text: string, source: Language, target: Language) => {
+  const validClient = await translationClient.getSupportedLanguages();
+
+  console.log("check translationClient", validClient);
   // Construct the request object
   const request = {
     parent: `projects/${process.env.GOOGLE_PROJECT_ID}/locations/global`,
@@ -34,7 +36,7 @@ const translate = async (text: string, source: Language, target: Language) => {
     //   private_key: process.env.GOOGLE_PRIVATE_KEY,
     // });
     // console.log(translationClient);
-    console.error("Error translating text:", error);
+    console.error("** Error translating text:", error);
     throw new Error("Failed to translate text");
   }
 };
@@ -49,6 +51,8 @@ const koreanToEnglish = async (text: string) => {
   }
 };
 const englishToKorean = async (text: string) => {
+  console.log("inputText", text);
+
   try {
     const result = await translate(text, "en", "kr");
     return result;
