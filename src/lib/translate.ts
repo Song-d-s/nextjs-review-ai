@@ -1,20 +1,23 @@
 import { TranslationServiceClient } from "@google-cloud/translate";
 
+/* - redundants
+type: process.env.GOOGLE_TYPE,
+client_id: process.env.GOOGLE_CLIENT_ID, */
 const translationClient = new TranslationServiceClient({
   credentials: {
-    type: process.env.GOOGLE_TYPE,
-    client_id: process.env.GOOGLE_CLIENT_ID,
+    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY,
   },
 });
 // Define the text to be translated and the target language
-type Language = "kr" | "en";
+type Language = "ko" | "en";
 
 const translate = async (text: string, source: Language, target: Language) => {
-  const validClient = await translationClient.getSupportedLanguages();
+  if (text.length < 1 || Number.isSafeInteger(text)) {
+    return text;
+  }
+  console.log("** Translating **");
 
-  console.log("check translationClient", validClient);
   // Construct the request object
   const request = {
     parent: `projects/${process.env.GOOGLE_PROJECT_ID}/locations/global`,
@@ -25,8 +28,14 @@ const translate = async (text: string, source: Language, target: Language) => {
   };
   // Call the translateText method with the request object
   try {
+    console.log("** Translate Processing 1 **");
     const [response] = await translationClient.translateText(request);
-    const result = response?.translations;
+    console.log("** Translate Processing 2 **");
+
+    const result = response.translations?.[0]?.translatedText;
+
+    console.log(text, "=>", result);
+
     return result;
   } catch (error) {
     // console.log("** check Credentials", {
@@ -43,7 +52,7 @@ const translate = async (text: string, source: Language, target: Language) => {
 
 const koreanToEnglish = async (text: string) => {
   try {
-    const result = await translate(text, "kr", "en");
+    const result = await translate(text, "ko", "en");
     return result;
   } catch (error) {
     console.error("Error translating Korean to English:", error);
@@ -51,10 +60,8 @@ const koreanToEnglish = async (text: string) => {
   }
 };
 const englishToKorean = async (text: string) => {
-  console.log("inputText", text);
-
   try {
-    const result = await translate(text, "en", "kr");
+    const result = await translate(text, "en", "ko");
     return result;
   } catch (error) {
     console.error("Error translating English to Korean:", error);

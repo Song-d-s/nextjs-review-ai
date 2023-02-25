@@ -3,10 +3,10 @@ import { BiPlus } from "react-icons/bi";
 import { SurveyFormState } from "../SurveyForm";
 import KeywordItem from "./KeywordItem";
 
-type SurveyInputKeywordProps = {
+interface SurveyInputKeywordProps {
   formState: SurveyFormState;
   setFormState: React.Dispatch<React.SetStateAction<SurveyFormState>>;
-};
+}
 
 const SurveyInputKeyword: React.FC<SurveyInputKeywordProps> = ({
   setFormState,
@@ -19,7 +19,7 @@ const SurveyInputKeyword: React.FC<SurveyInputKeywordProps> = ({
     setNewKeyword(event.target.value);
   };
 
-  const onClick = (event: React.MouseEvent) => {
+  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (newKeyword.trim() === "" || keywords.includes(newKeyword)) {
       setNewKeyword("");
@@ -48,7 +48,9 @@ const SurveyInputKeyword: React.FC<SurveyInputKeywordProps> = ({
             <KeywordItem
               key={keyword}
               keyword={keyword}
+              keywords={keywords}
               setKeywords={setKeywords}
+              setFormState={setFormState}
             />
           ))}
         </div>

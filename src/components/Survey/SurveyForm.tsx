@@ -28,7 +28,7 @@ const defaultFormState: SurveyFormState = {
 
 const SurveyForm: React.FC<SurveyFormProps> = () => {
   const [formState, setFormState] = useState(defaultFormState);
-  const { makePrompt, postQuery } = useQuery();
+  const { postQuery } = useQuery();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let { name, value } = event.target;
@@ -40,10 +40,13 @@ const SurveyForm: React.FC<SurveyFormProps> = () => {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("formState:", formState);
-    const prompt = await makePrompt(formState);
-    const test_result = postQuery(prompt);
-    console.log("onSubmit test_result:", test_result);
+    console.log("formState Check:", formState);
+    try {
+      const { result } = await postQuery(formState);
+      console.log("onSubmit result:", result);
+    } catch (error) {
+      console.error("Review generation error", error);
+    }
   };
 
   return (
@@ -95,6 +98,7 @@ const SurveyForm: React.FC<SurveyFormProps> = () => {
           </button>
         </div>
       </form>
+      <div>{}</div>
     </>
   );
 };

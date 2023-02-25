@@ -1,15 +1,24 @@
 import React from "react";
 import { BiX } from "react-icons/bi";
+import { SurveyFormState } from "../SurveyForm";
 
-type KeywordItemProps = {
-  setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
+interface KeywordItemProps {
   keyword: string;
-};
+  keywords: string[];
+  setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
+  setFormState: React.Dispatch<React.SetStateAction<SurveyFormState>>;
+}
 
-const KeywordItem: React.FC<KeywordItemProps> = ({ keyword, setKeywords }) => {
+const KeywordItem: React.FC<KeywordItemProps> = ({
+  keyword,
+  keywords,
+  setKeywords,
+  setFormState,
+}) => {
   const onClick = () => {
-    console.log(keyword);
-    setKeywords((prev) => prev.filter((item) => item !== keyword));
+    const updatedKeywords = keywords.filter((item) => item !== keyword);
+    setKeywords(updatedKeywords);
+    setFormState((prev) => ({ ...prev, keyword: updatedKeywords }));
   };
   return (
     <div className="badge-success badge mr-1 whitespace-nowrap py-3 ">
