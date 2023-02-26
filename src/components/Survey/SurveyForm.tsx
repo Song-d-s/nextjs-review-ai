@@ -6,7 +6,7 @@ import SurveyInputPacket from "./SurveyInputPacket";
 import SurveyInputKeyword from "./Keyword/SurveyInputKeyword";
 import SurveyInputType from "./SurveyInputType";
 import Spinner from "../Spinner";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { resultState } from "../../atoms/resultAtom";
 import { errorState } from "@/atoms/errorAtom";
 import { TIME_LIMIT } from "@/lib/openai";
@@ -109,7 +109,7 @@ const SurveyForm: React.FC<SurveyFormProps> = () => {
     if (remainedTime > 0) {
       const interval = setInterval(() => {
         setRemainedTime((prev) => prev - 1);
-        console.log("Timer Running");
+        // console.log("Timer Running");
       }, 1000);
       return () => clearInterval(interval);
     }
@@ -159,7 +159,11 @@ const SurveyForm: React.FC<SurveyFormProps> = () => {
           {remainedTime ? (
             <div className="btn col-span-3 cursor-not-allowed">
               <BiTimer className="mr-2 text-lg" />
-              {remainedTime} 초 기다려주세요.
+              {remainedTime <= 1 ? (
+                <Spinner />
+              ) : (
+                <>{remainedTime} 초 기다려주세요.</>
+              )}
             </div>
           ) : (
             <button
