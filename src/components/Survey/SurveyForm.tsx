@@ -85,15 +85,16 @@ const SurveyForm: React.FC<SurveyFormProps> = () => {
         content: result,
         date: Date.now(),
       }));
+      // after process
+      localStorage.setItem("timer", "" + Date.now());
+      // console.log("Timer Set", localStorage.timer);
+      setRemainedTime(60);
+      setPage({ page: true });
     } catch (error: any) {
       console.error("Review generation error", error);
       setError({ message: "리뷰 생성에 실패했습니다." });
     }
-    localStorage.setItem("timer", "" + Date.now());
-    // console.log("Timer Set", localStorage.timer);
     setIsLoading(false);
-    setRemainedTime(60);
-    setPage({ page: true });
   };
 
   const getRemainedTime = () => {
