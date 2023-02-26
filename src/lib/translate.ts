@@ -13,7 +13,7 @@ const translate = async (text: string, source: Language, target: Language) => {
   if (text.length < 1 || Number.isSafeInteger(text)) {
     return text;
   }
-  console.log("** Translating **");
+  // console.log("** Translating **");
 
   // Construct the request object
   const request = {
@@ -25,13 +25,13 @@ const translate = async (text: string, source: Language, target: Language) => {
   };
   // Call the translateText method with the request object
   try {
-    console.log("** Translate Processing 1 **");
+    // console.log("** Translate Processing 1 **");
     const [response] = await translationClient.translateText(request);
-    console.log("** Translate Processing 2 **");
+    // console.log("** Translate Processing 2 **");
 
     const result = response.translations?.[0]?.translatedText;
 
-    console.log(text, "=>", result);
+    // console.log(text, "=>", result);
 
     return result;
   } catch (error) {

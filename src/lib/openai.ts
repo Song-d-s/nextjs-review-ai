@@ -13,7 +13,7 @@ const generateText = async (prompt: string, packet: number) => {
   // Define the parameters for the request
   // Send the request to the OpenAI API
   try {
-    console.log("openai request delivered", packet, "<< Packet Limit");
+    // console.log("openai request delivered", packet, "<< Packet Limit");
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: prompt,

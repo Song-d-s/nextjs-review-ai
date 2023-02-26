@@ -16,7 +16,7 @@ const makePrompt = (data: FormState) => {
     Please describe within ${packet * 5} characters.
     Also, use negative phrases for less than 5 stars.
     `;
-  console.log("Prompt Generated:", prompt);
+  // console.log("Prompt Generated:", prompt);
   return prompt;
 };
 

@@ -41,10 +41,10 @@ export const isTooFast = () => {
 const SurveyForm: React.FC<SurveyFormProps> = () => {
   const [formState, setFormState] = useState(defaultFormState);
   const [isLoading, setIsLoading] = useState(false);
-  const [remainedTime, setRemainedTime] = useState(1);
+  const [remainedTime, setRemainedTime] = useState(0);
   const setError = useSetRecoilState(errorState);
+  const setPage = useSetRecoilState(pageState);
   const setResultStateValue = useSetRecoilState(resultState);
-  const [page, setPage] = useRecoilState(pageState);
   const { postQuery } = useQuery();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,10 +76,10 @@ const SurveyForm: React.FC<SurveyFormProps> = () => {
 
     // Sending Query
     setIsLoading(true);
-    console.log("formState Check:", formState);
+    // console.log("formState Check:", formState);
     try {
       const { result } = await postQuery(formState);
-      console.log("onSubmit postQuery result:", result);
+      // console.log("onSubmit postQuery result:", result);
       setResultStateValue((prev) => ({
         ...prev,
         content: result,
@@ -90,24 +90,26 @@ const SurveyForm: React.FC<SurveyFormProps> = () => {
       setError({ message: "리뷰 생성에 실패했습니다." });
     }
     localStorage.setItem("timer", "" + Date.now());
-    console.log("Timer Set", localStorage.timer);
+    // console.log("Timer Set", localStorage.timer);
     setIsLoading(false);
     setRemainedTime(60);
     setPage({ page: true });
   };
 
+  const getRemainedTime = () => {
+    const timePassed = TIME_LIMIT - Date.now() + parseInt(localStorage.timer);
+    const timeCalculated = Math.floor(timePassed / 1000);
+    if (timeCalculated < 0) return 0;
+    return timeCalculated;
+  };
+
   useEffect(() => {
-    const getRemainedTime = () => {
-      const timePassed = TIME_LIMIT - Date.now() + parseInt(localStorage.timer);
-      const timeCalculated = Math.floor(timePassed / 1000);
-      if (timeCalculated < 0) return 0;
-      return timeCalculated;
-    };
     setRemainedTime(getRemainedTime());
 
     if (remainedTime > 0) {
       const interval = setInterval(() => {
         setRemainedTime((prev) => prev - 1);
+        console.log("Timer Running");
       }, 1000);
       return () => clearInterval(interval);
     }
