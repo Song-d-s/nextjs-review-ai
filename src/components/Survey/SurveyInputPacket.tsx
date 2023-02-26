@@ -13,7 +13,7 @@ const SurveyInputRating: React.FC<SurveyInputRatingProps> = ({
     <>
       <div className="relative w-full">
         <label className="input-group input-group-vertical">
-          <span className="label-text">글자수: {value}</span>
+          <span className="label-text">길이: {value}</span>
           <div className="input-bordered input"></div>
         </label>
         <div className="absolute bottom-2.5 left-0 right-0 px-3">

@@ -1,5 +1,7 @@
 import { Configuration, OpenAIApi } from "openai";
 
+export const TIME_LIMIT = 60 * 1000; //
+
 // Initialize the OpenAI API with your API key
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -15,11 +17,13 @@ const generateText = async (prompt: string, packet: number) => {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: prompt,
-      temperature: 0.7,
-      max_tokens: Number(packet),
+      temperature: 0.9,
+      max_tokens: Number(packet) * 5,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
+      stream: false,
+      n: 1,
     });
     // Return the generated text
     const { text } = response.data.choices[0];
