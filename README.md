@@ -28,5 +28,5 @@
 - [tailwind-scrollbar-hide](https://github.com/reslear/tailwind-scrollbar-hide)
 - [daisy ui](https://daisyui.com/docs/install/) `npm i daisyui`
 - [react-icons](https://react-icons.github.io/react-icons)
-
+- [google-cloud/translate](https://www.npmjs.com/package/@google-cloud/translate)
 
