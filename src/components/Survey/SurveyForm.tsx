@@ -29,7 +29,7 @@ const defaultFormState: SurveyFormState = {
   type: "",
   company: "",
   rating: 5,
-  packet: 30,
+  packet: 100,
   keyword: [],
 };
 
